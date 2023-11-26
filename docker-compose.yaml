@@ -6,6 +6,7 @@ services:
       context: .
       dockerfile: Dockerfile
     volumes:
-      - .:/go/src/myapp
-    working_dir: /go/src/myapp
-    command: bash -c "goreleaser build --rm-dist --snapshot -f .goreleaser.debug.yaml --id casaos-local-storage-amd64"
+      - .:/go/src/app
+    working_dir: /go/src/app
+    command: bash -c "goreleaser release --rm-dist --snapshot"
+    # command: bash -c "goreleaser build --rm-dist --snapshot -f .goreleaser.debug.yaml --id casaos-local-storage-amd64"
