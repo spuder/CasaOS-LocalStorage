@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  go-build-env:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/go/src/myapp
+    working_dir: /go/src/myapp
+    command: bash -c "goreleaser build --rm-dist --snapshot -f .goreleaser.debug.yaml --id casaos-local-storage-amd64"
