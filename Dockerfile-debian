@@ -1,0 +1,33 @@
+# Use the Debian 11 slim image as a base
+FROM debian:bullseye-slim
+
+# Update package list and install curl
+RUN apt-get update \
+    && apt-get install -y curl sudo procps\
+    && rm -rf /var/lib/apt/lists/*
+
+RUN apt-get update && apt-get install -y systemd docker.io \
+    && rm -rf /var/lib/apt/lists/* \
+    && systemctl mask \
+        dev-hugepages.mount \
+        sys-fs-fuse-connections.mount \
+        systemd-remount-fs.service \
+        getty.target \
+        console-getty.service
+
+# RUN (cd /lib/systemd/system/sysinit.target.wants/; for i in *; do [ "$i" == systemd-tmpfiles-setup.service ] || rm -f $i; done); \
+#     rm -f /lib/systemd/system/multi-user.target.wants/*;\
+#     rm -f /etc/systemd/system/*.wants/*;\
+#     rm -f /lib/systemd/system/local-fs.target.wants/*; \
+#     rm -f /lib/systemd/system/sockets.target.wants/*udev*; \
+#     rm -f /lib/systemd/system/sockets.target.wants/*initctl*; \
+#     rm -f /lib/systemd/system/basic.target.wants/*;\
+#     rm -f /lib/systemd/system/anaconda.target.wants/*;
+
+# Set the working directory
+WORKDIR /workspace
+
+VOLUME [ "/sys/fs/cgroup" ]
+
+# Optional: Set a default command
+CMD ["/lib/systemd/systemd"]
