@@ -9,21 +9,21 @@ services:
       - .:/go/src/app
     working_dir: /go/src/app
     command: bash -c "goreleaser release --rm-dist --snapshot"
-    # command: bash -c "goreleaser build --rm-dist --snapshot -f .goreleaser.debug.yaml --id casaos-local-storage-amd64"
   
-  # Uage: 
-  # docker compose run casaos-localstorage
-  # curl -fsSL get.casaos.io | sudo bash
-  casaos-localstorage:
-    build:
-      context: .
-      dockerfile: Dockerfile-debian
-    container_name: casaos-localstorage
-    entrypoint: /sbin/init
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:ro
-      - /var/run/docker.sock:/var/run/docker.sock
-    tty: true
-    stdin_open: true
-    privileged: true
-    restart: "no"
+  # # Uage: 
+  # # docker compose run casaos-localstorage
+  # # curl -fsSL get.casaos.io | sudo bash
+  # TODO: Currently this is not working due to systemctl not installed in contianer
+  # casaos-localstorage:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile-debian
+  #   container_name: casaos-localstorage
+  #   entrypoint: /sbin/init
+  #   volumes:
+  #     - /sys/fs/cgroup:/sys/fs/cgroup:ro
+  #     - /var/run/docker.sock:/var/run/docker.sock
+  #   tty: true
+  #   stdin_open: true
+  #   privileged: true
+  #   restart: "no"
